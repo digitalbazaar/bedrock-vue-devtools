@@ -1,0 +1,30 @@
+{
+  "name": "@bedrock/vue-devtools",
+  "version": "0.0.1-0",
+  "type": "module",
+  "description": "Developer-mode overlay and devtools for bedrock-vue",
+  "license": "Apache-2.0",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./components/*": "./components/*"
+  },
+  "files": [
+    "components/**/*.vue",
+    "lib/**/*.js"
+  ],
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "vue": "^3.5.38"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/bedrock-vue-devtools"
+  },
+  "devDependencies": {
+    "@digitalbazaar/eslint-config": "^8.0.1",
+    "eslint": "^9.39.4"
+  }
+}
