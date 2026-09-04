@@ -17,38 +17,45 @@ SPDX-License-Identifier: Apache-2.0
 -->
 
 <template>
-  <div
-    v-if="open"
-    class="dev-mode-overlay"
-    role="dialog"
-    aria-label="Developer Mode">
-    <header class="dev-mode-overlay__header">
-      <span class="dev-mode-overlay__title">Developer Mode</span>
-      <button
-        type="button"
-        class="dev-mode-overlay__close"
-        aria-label="Close developer mode"
-        @click="close">
-        &times;
-      </button>
-    </header>
-    <div class="dev-mode-overlay__body">
-      <p
-        v-if="tools.length === 0"
-        class="dev-mode-overlay__empty">
-        No dev tools registered. Use <code>registerDevTool()</code> to add one.
-      </p>
-      <section
-        v-for="tool in tools"
-        :key="tool.id"
-        class="dev-mode-overlay__tool">
-        <h3 class="dev-mode-overlay__tool-label">
-          {{tool.label}}
-        </h3>
-        <component :is="tool.component" />
-      </section>
+  <!-- Teleported to `document.body` so the overlay is reachable on every page
+  without the host application wiring it into its own component tree. The
+  overlay reads its state from the module-level registry in `devTools.js`, so
+  it needs nothing from the app's tree to render. -->
+  <Teleport to="body">
+    <div
+      v-if="open"
+      class="dev-mode-overlay"
+      role="dialog"
+      aria-label="Developer Mode">
+      <header class="dev-mode-overlay__header">
+        <span class="dev-mode-overlay__title">Developer Mode</span>
+        <button
+          type="button"
+          class="dev-mode-overlay__close"
+          aria-label="Close developer mode"
+          @click="close">
+          &times;
+        </button>
+      </header>
+      <div class="dev-mode-overlay__body">
+        <p
+          v-if="tools.length === 0"
+          class="dev-mode-overlay__empty">
+          No dev tools registered.
+          Use <code>registerDevTool()</code> to add one.
+        </p>
+        <section
+          v-for="tool in tools"
+          :key="tool.id"
+          class="dev-mode-overlay__tool">
+          <h3 class="dev-mode-overlay__tool-label">
+            {{tool.label}}
+          </h3>
+          <component :is="tool.component" />
+        </section>
+      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script>
